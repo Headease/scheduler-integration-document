@@ -1,3 +1,7 @@
+---
+description: Met description
+---
+
 # Integratiedocument MijnAntes
 
 Applicaties die functionaliteit bieden voor patiënten in het Koppeltaal domein, worden embedded weergegeven in Scheduler middels een iframe. Hierdoor kan een cliënt in een en dezelfde omgeving blijven voor het deelnemen aan verschillende taken en het zien van voortgang daarop. Koppeltaal zorgt hier voor de single sign on functionaliteit en de mogelijk om middels een standaardprotocol gegevens uit te wisselen. Gebruik zoveel mogelijk de laatst beschikbare versie van de adapter in jouw programmeertaal om er zeker van te zijn dat de berichtgeving binnen het domein eenduidig is.
