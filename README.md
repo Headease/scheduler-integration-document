@@ -43,6 +43,8 @@ Scheduler geeft status weer op zowel subactiviteit- als activiteitsniveau. Hierv
 
 De statussen worden op de volgende manier getoond \(`AVAILABLE` wordt hier niet getoond maar is simpelweg niet greyed-out\):
 
+![Afbeelding 1: statusoverzicht in een activiteit](.gitbook/assets/screenshot-2020-03-02-at-16.22.32.png)
+
 
 
 ## Applicatie launch vanuit Scheduler
@@ -121,11 +123,15 @@ Op desktop resoluties zal de 'sidebar' standaard uitgeklapt zijn. Het content if
 
 De hoogte is altijd 100% van het venster.
 
+![Afbeelding 2: Dekstop dimensies](.gitbook/assets/desktop_resolutions.gif)
+
 ### Mobile
 
 Scheduler ondersteunt mobiele resoluties, de 'sidebar ' zal dan standaard ingeklapt zijn en neemt de volledige breedte van het scherm, tot een maximum van 960 pixels. Daarboven gelden de desktop afmetingen. Sidebar uitgeklapt: maximaal 704 pixels breed. Sidebar ingeklapt \(default\): maximaal 960 pixels breed.
 
 De hoogte is altijd 100% van het venster minus 64 pixels voor de navigatie bar.
+
+![Afbeelding 3: Mobiel dimensies](.gitbook/assets/mobile_resolutions.gif)
 
 ### Algehele stijl
 
