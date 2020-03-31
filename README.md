@@ -73,28 +73,28 @@ Vanuit de te integreren applicatie verwachten wij het volgende:
 
 1. Een _GET_ request op de volgende URL:
 
-```text
-https://{HOSTNAME}/ensureCookie
-```
+   ```text
+   https://{HOSTNAME}/ensureCookie
+   ```
 
-1. Dit request serveert de volgende HTML:
+2. Dit request serveert de volgende HTML:
 
-```markup
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Ensure Builder Cookie</title>
-    </head>
-    <body>
-        <script>
-            document.cookie = "safari_cookie_fix=fixed; path=/";
-            location.href = document.referrer;
-        </script>
-    </body>
-</html>
-```
+   ```markup
+   <!DOCTYPE html>
+   <html>
+       <head>
+           <title>Ensure Builder Cookie</title>
+       </head>
+       <body>
+           <script>
+               document.cookie = "safari_cookie_fix=fixed; path=/";
+               location.href = document.referrer;
+           </script>
+       </body>
+   </html>
+   ```
 
-1. De bovenstaande request dient uitgevoerd te kunnen worden zonder autorisatie.
+3. De bovenstaande request dient uitgevoerd te kunnen worden zonder autorisatie.
 
 ### SameSite cookie
 
