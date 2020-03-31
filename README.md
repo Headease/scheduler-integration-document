@@ -1,4 +1,5 @@
-# Integratiedocument MijnAntes
+
+# Integratiedocument MijnAntes test
 
 Applicaties die functionaliteit bieden voor patiënten in het Koppeltaal domein, worden embedded weergegeven in Scheduler middels een iframe. Hierdoor kan een cliënt in een en dezelfde omgeving blijven voor het deelnemen aan verschillende taken en het zien van voortgang daarop. Koppeltaal zorgt hier voor de single sign on functionaliteit en de mogelijk om middels een standaardprotocol gegevens uit te wisselen. Gebruik zoveel mogelijk de laatst beschikbare versie van de adapter in jouw programmeertaal om er zeker van te zijn dat de berichtgeving binnen het domein eenduidig is.
 
@@ -14,7 +15,7 @@ Ervan uitgaande dat de applicatie al om kan gaan met Koppeltaal berichten, wordt
 
 ### Activiteiten launch
 
-We onderscheiden drie typen applicatie launches:
+We onderscheiden 3 typen applicatie launches:
 
 | Type | User identifier | Patient identifier |
 | :--- | :--- | :--- |
@@ -45,6 +46,8 @@ De statussen worden op de volgende manier getoond \(`AVAILABLE` wordt hier niet 
 
 ![Afbeelding 1: statusoverzicht in een activiteit](.gitbook/assets/screenshot-2020-03-02-at-16.22.32.png)
 
+
+
 ## Applicatie launch vanuit Scheduler
 
 Omdat content via een iframe wordt gepresenteerd, is het van belang dat een aantal zaken goed afgesteld staan. Onder andere X-Frame-Options en Third-party cookies.
@@ -71,30 +74,30 @@ Safari en IE blokkeren standaard third-party cookies. Andere browsers bieden dit
 
 Vanuit de te integreren applicatie verwachten wij het volgende:
 
-1. Een _GET_ request op de volgende URL:
+    1. Een _GET_ request op de volgende URL:
 
-   ```text
-   https://{HOSTNAME}/ensureCookie
-   ```
+```text
+https://{HOSTNAME}/ensureCookie
+```
 
-2. Dit request serveert de volgende HTML:
+    2. Dit request serveert de volgende HTML:
 
-   ```markup
-   <!DOCTYPE html>
-   <html>
-       <head>
-           <title>Ensure Builder Cookie</title>
-       </head>
-       <body>
-           <script>
-               document.cookie = "safari_cookie_fix=fixed; path=/";
-               location.href = document.referrer;
-           </script>
-       </body>
-   </html>
-   ```
+```markup
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ensure Builder Cookie</title>
+    </head>
+    <body>
+        <script>
+            document.cookie = "safari_cookie_fix=fixed; path=/";
+            location.href = document.referrer;
+        </script>
+    </body>
+</html>
+```
 
-3. De bovenstaande request dient uitgevoerd te kunnen worden zonder autorisatie.
+    3. De bovenstaande request dient uitgevoerd te kunnen worden zonder autorisatie.
 
 ### SameSite cookie
 
@@ -102,11 +105,11 @@ De `SameSite` setting van cookies wordt steeds breder geïmplementeerd. Deze set
 
 De `SameSite` cookie moet toegevoegd worden bij het zetten van een session cookie. Belangrijk hierbij is dat de `SameSite` de waarde `None` heeft. Dit omdat vanuit MijnAntes de session cookie meegestuurd moet worden naar jullie server. Zie hieronder een voorbeeld van een valide Set-Cookie:
 
-```text
+```
 Set-Cookie: JSESSIONID=BABA9C0850F67E294FE084F1F059507A; Path=/; Secure; HttpOnly; SameSite=None; Secure
 ```
 
-De setting `None` werkt enkel i.c.m. een `Secure` cookie. Houd er rekening mee \(indien er lokaal over HTTP getest wordt\) dat de cookie lokaal waarschijnlijk niet gezet moet worden.
+De setting `None` werkt enkel i.c.m. een `Secure` cookie. Houd er  rekening mee \(indien er lokaal over HTTP getest wordt\) dat de cookie lokaal waarschijnlijk niet gezet moet worden.
 
 ## Applicatie weergave in Scheduler
 
