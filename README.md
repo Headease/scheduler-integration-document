@@ -1,6 +1,3 @@
----
-description: Met description
----
 
 # Integratiedocument MijnAntes
 
