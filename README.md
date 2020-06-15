@@ -47,7 +47,19 @@ De statussen worden op de volgende manier getoond \(`AVAILABLE` wordt hier niet 
 
 ## Applicatie launch vanuit Scheduler
 
-Omdat content via een iframe wordt gepresenteerd, is het van belang dat een aantal zaken goed afgesteld staan. Onder andere X-Frame-Options en Third-party cookies.
+Omdat content via een iframe wordt gepresenteerd, is het van belang dat een aantal zaken goed afgesteld staan. 
+
+### Third-party cookies
+
+Browsers zijn druk bezig om third-party cookies standaard uit te zetten. Helaas moet vaak per browser een andere oplossing toegepast worden om wel third-party cookies te mogen zetten. Deze changes worden vrij snel en zonder pardon uitgerold. 
+
+Om dit te voorkomen kiest MijnAntes ervoor om de te integreren applicaties te benaderen vanaf een mijnantes.nl subdomein. Dit zorgt ervoor dat de applicaties out-of-the-box cookies mogen zetten aangezien ze op hetzelfde trusted domain zitten. Een CNAME record is een DNS alias. Zo blijft de originele domeinnaam werken zoals u gewend bent, maar kan de applicatie ook vanaf de alias benaderd worden. Een CNAME record ziet er als volgt uit:
+
+```bash
+example.mijnantes.nl CNAME example.com
+```
+
+Headease zal een CNAME record aanvragen voor de te integreren partij. Het is van belang dat de gekozen CNAME generiek is. Zo kan deze over alle content hergebruikt kan worden. 
 
 ### X-Frame-Options
 
@@ -64,49 +76,6 @@ X-Frame-Options: allow-from https://www.mijnantes.nl
 | :--- | :--- |
 | _Content-Security-Policy: frame-ancestors_ | Verwijst naar domein\(en\) dat de applicatie mag tonen in iframe. Deze header overruled X-Frame-Options indien ondersteund. |
 | _X-Frame-Options: allow-from_ | Zelfde als _frame-ancestors_, support voor Internet Explorer. |
-
-### Third-party cookies
-
-Safari en IE blokkeren standaard third-party cookies. Andere browsers bieden dit optioneel aan. De session cookie van de te integreren applicatie \(in het iframe\) is een third party cookie, vanuit Scheduler bezien. Hierdoor kan het gebeuren dat er niet wordt ingelogd op een Koppeltaal launch, omdat er geen session bekend is. Als de te integreren applicatie cookies nodig heeft, wordt de volgende aanpak gehanteerd.
-
-Vanuit de te integreren applicatie verwachten wij het volgende:
-
-1. Een _GET_ request op de volgende URL:
-
-   ```text
-   https://{HOSTNAME}/ensureCookie
-   ```
-
-2. Dit request serveert de volgende HTML:
-
-   ```markup
-   <!DOCTYPE html>
-   <html>
-       <head>
-           <title>Ensure Builder Cookie</title>
-       </head>
-       <body>
-           <script>
-               document.cookie = "safari_cookie_fix=fixed; path=/";
-               location.href = document.referrer;
-           </script>
-       </body>
-   </html>
-   ```
-
-3. De bovenstaande request dient uitgevoerd te kunnen worden zonder autorisatie.
-
-### SameSite cookie
-
-De `SameSite` setting van cookies wordt steeds breder geïmplementeerd. Deze setting geeft aan of een cookie meegestuurd mag worden naar andere domeinen. Het is dus een bescherming tegen CSRF aanvallen. Vanaf Chrome versie 80 wordt deze change langzaam uitgerold over de eindgebruikers. Zie [https://auth0.com/docs/sessions/concepts/cookie-attributes](https://auth0.com/docs/sessions/concepts/cookie-attributes) voor meer informatie.
-
-De `SameSite` cookie moet toegevoegd worden bij het zetten van een session cookie. Belangrijk hierbij is dat de `SameSite` de waarde `None` heeft. Dit omdat vanuit MijnAntes de session cookie meegestuurd moet worden naar jullie server. Zie hieronder een voorbeeld van een valide Set-Cookie:
-
-```text
-Set-Cookie: JSESSIONID=BABA9C0850F67E294FE084F1F059507A; Path=/; Secure; HttpOnly; SameSite=None; Secure
-```
-
-De setting `None` werkt enkel i.c.m. een `Secure` cookie. Houd er rekening mee \(indien er lokaal over HTTP getest wordt\) dat de cookie lokaal waarschijnlijk niet gezet moet worden.
 
 ## Applicatie weergave in Scheduler
 
@@ -142,36 +111,4 @@ Het is belangrijk dat de intergratie aanvoelt als één geheel. Aangezien de te 
 ## Content beschikbaar maken voor derden / naasten
 
 MijnAntes ondersteunt de rol `RELATED_PERSON`. Niet elke applicatie ondersteunt deze rol. Graag aangeven wanneer dit het geval is. Op deze manier kunnen wij ervoor zorgen dat de content niet te delen is met derden / naasten.
-
-{% api-method method="get" host="" path="/v1/mappins" %}
-{% api-method-summary %}
-Get Mapping
-{% endapi-method-summary %}
-
-{% api-method-description %}
-
-{% endapi-method-description %}
-
-{% api-method-spec %}
-{% api-method-request %}
-{% api-method-path-parameters %}
-{% api-method-parameter name="" type="number" required=false %}
-
-{% endapi-method-parameter %}
-{% endapi-method-path-parameters %}
-{% endapi-method-request %}
-
-{% api-method-response %}
-{% api-method-response-example httpCode=200 %}
-{% api-method-response-example-description %}
-
-{% endapi-method-response-example-description %}
-
-```
-
-```
-{% endapi-method-response-example %}
-{% endapi-method-response %}
-{% endapi-method-spec %}
-{% endapi-method %}
 
